@@ -1,4 +1,5 @@
 
+
 The data set for this experiment located at UCI Machine Learning is available at https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
 The run_analysis.R file fetches the data (after it is downloaded to disk), reads it and merges different data sets together to combine the information of the Activities, and Subjects along with the data collected from Experiments. This helps in understanding which Subject had done what kind of physical activity as per the type of Activity(Standing, Walking etc.)
@@ -67,14 +68,11 @@ data <- rbind(trainData, testData)
 5. Extract the data as required:
 
 #Extracts only the measurements on the mean and standard deviation for each measurement
-data_mean <- sapply(data, mean, na.rm = TRUE)
-data_sd <- sapply(data,sd,na.rm=TRUE)
+data_mean_sd <- data[,c(grep("[Mm]ean.)|std.)", names(data)),562,563)]
 
 6. Write final data into a file:
 
 #From the data set in step 4, creates a second, independent tidy data set with the average of 
 # each variable for each activity and each subject.
-
-dataInTable <- data.table(data)
-tidyData <- dataInTable[,lapply(.SD, mean), by="Activity,Subject"]
+tidyData <- aggregate(data_mean_sd[,1:66], data_mean_sd[,67:68], mean)
 write.table(tidyData, file="tidyData.txt", sep="\t", row.names=FALSE)
