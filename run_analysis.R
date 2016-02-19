@@ -38,11 +38,10 @@ testData <- cbind(testData, testSubjects)
 data <- rbind(trainData, testData)
 
 #Extracts only the measurements on the mean and standard deviation for each measurement
-data_mean <- sapply(data, mean, na.rm = TRUE)
-data_sd <- sapply(data,sd,na.rm=TRUE)
+data_mean_sd <- data[,c(grep("[Mm]ean.)|std.)", names(data)),562,563)]
 
 #From the data set in step 4, creates a second, independent tidy data set with the average of 
 # each variable for each activity and each subject.
-dataInTable <- data.table(data)
-tidyData <- dataInTable[,lapply(.SD, mean), by="Activity,Subject"]
+tidyData <- aggregate(data_mean_sd[,1:66], data_mean_sd[,67:68], mean)
+
 write.table(tidyData, file="tidyData.txt", sep="\t", row.names=FALSE)
