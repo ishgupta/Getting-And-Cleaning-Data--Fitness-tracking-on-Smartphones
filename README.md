@@ -4,4 +4,4 @@ The run_analysis.R file fetches the data (after it is downloaded to disk), reads
 
 CodeBook gives a very brief description about the experiment done, and the details of what the data set would include.
 
-Data set is also attached along with the repository for all the files referred for this Exercise.
+
