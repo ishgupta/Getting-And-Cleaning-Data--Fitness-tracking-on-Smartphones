@@ -18,8 +18,8 @@ features <- read.table("./UCI HAR Dataset/features.txt")
 trainActivities$V1 <- factor(trainActivities$V1, levels = activities$V1, labels=activities$V2)
 testActivities$V1 <- factor(testActivities$V1, levels = activities$V1, labels=activities$V2)
 
-
 #Appropriately labels the data set with descriptive variable names. 
+
 colnames(testSubjects) <- c("Subject")
 colnames(trainSubjects) <- c("Subject")
 colnames(trainActivities) <- c("Activity")
@@ -29,10 +29,12 @@ colnames(testData) <- features$V2
 colnames(trainData) <- features$V2
 
 #Merges the training and the test sets to create one data set.
+
 testData <- cbind(testData, testActivities)
 trainData <- cbind(trainData, trainActivities)
 trainData <- cbind(trainData, trainSubjects)
 testData <- cbind(testData, testSubjects)
+
 data <- rbind(trainData, testData)
 
 #Extracts only the measurements on the mean and standard deviation for each measurement
@@ -43,4 +45,4 @@ data_sd <- sapply(data,sd,na.rm=TRUE)
 # each variable for each activity and each subject.
 dataInTable <- data.table(data)
 tidyData <- dataInTable[,lapply(.SD, mean), by="Activity,Subject"]
-write.table(tidyData, file="tidyData.txt", sep="\t")
+write.table(tidyData, file="tidyData.txt", sep="\t", row.names=FALSE)
